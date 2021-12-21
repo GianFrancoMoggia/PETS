@@ -60,4 +60,8 @@ export class ObtenerDataService {
     return this.afs.doc<userProfile>(`users/${idUsuario}`).valueChanges({idField:"docId"});
   }
 
+  //getPaseosActivos(idUsuario:string):Observable<any[]>{
+  //  return this.afs.collection(`/contratoPaseador`, ref => ref.where('idPaseador', '==', idUsuario)).valueChanges({idField:"docId"});
+  //}
+
 }

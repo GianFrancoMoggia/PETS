@@ -9,6 +9,10 @@ import { map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 import { Cuidador } from '../shared/cuidador.interface';
+import { ContratoPaseador } from '../shared/contrato-paseador.interface';
+import { Observable } from 'rxjs';
+import { userProfile } from '../shared/user.interface';
+import { ObtenerDataService } from '../services/obtener-data.service';
 
 
 
@@ -21,7 +25,9 @@ import { Cuidador } from '../shared/cuidador.interface';
 
 export class PerfilUsuarioPage {
   
-  constructor(private afs: AngularFirestore, private aServ:AuthService, private userServ: UserService, private popController: PopoverPerfilComponent) {
+
+
+  constructor(private obDataServ: ObtenerDataService, private afs: AngularFirestore, private aServ:AuthService, private userServ: UserService, private popController: PopoverPerfilComponent) {
     
   }
 

@@ -36,6 +36,15 @@
       </div>
     </ion-col>
   </ion-row> 
+
+
+  <div *ngIf="userServ.paseador | async;let paseador">
+      <h2 class="titulo-apartado-paseo" >Paseos activos</h2>
+        <app-paseo-activo *ngFor="let contrato of paseador.contratos" idContrato="{{contrato}}">
+        </app-paseo-activo>
+  </div>
+
+
   <div class="fondo-color-casi-blanco">
     <!------------------------------------paseos------------------------------------------>
     <ion-row id="Paseos" *ngIf="userServ.planesPaseador | async">

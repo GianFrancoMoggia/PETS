@@ -4,6 +4,15 @@
   </ion-toolbar>
 </ion-header>
 
+<div *ngIf="userServ.user | async;let user">
+  <ion-row style="opacity: 0.8;background: #7bd7b5;box-shadow: 0px 5px 4px rgb(0 0 0 / 30%);">
+    <label style="margin: auto;font-size: x-large;color: white">Avisos</label>
+  </ion-row>
+  <app-solicitud-contrato *ngFor="let contrato of user.avisos" idContrato={{contrato}} tipo="avisos">
+  </app-solicitud-contrato>
+</div>
+
+
 <ion-content>
   <div *ngIf="userServ.paseador | async;let paseador">
     <div *ngIf="paseador.solicitud_paseo.length > 0">

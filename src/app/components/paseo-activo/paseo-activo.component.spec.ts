@@ -1,22 +1,20 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { PaseoActivoComponent } from '../components/paseo-activo/paseo-activo.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { PaseoActivoComponent } from './paseo-activo.component';
 
-import { PerfilUsuarioPage } from './perfil-usuario.page';
-
-describe('PerfilUsuarioPage', () => {
-  let component: PerfilUsuarioPage;
-  let fixture: ComponentFixture<PerfilUsuarioPage>;
+describe('PaseoActivoComponent', () => {
+  let component: PaseoActivoComponent;
+  let fixture: ComponentFixture<PaseoActivoComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PerfilUsuarioPage, PaseoActivoComponent ],
+      declarations: [ PaseoActivoComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PerfilUsuarioPage);
+    fixture = TestBed.createComponent(PaseoActivoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

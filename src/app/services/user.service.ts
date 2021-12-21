@@ -5,7 +5,6 @@ import { Cuidador } from "../shared/cuidador.interface";
 import { mascota } from "../shared/mascota.interface";
 import { PlanPaseo } from "../shared/plan-paseo.interface";
 import { PlanCuidador } from "../shared/plan-cuidador.interface";
-
 import firebase from "firebase/app";
 
 import {
@@ -30,18 +29,22 @@ import { ContratoPaseador } from "../shared/contrato-paseador.interface";
   providedIn: "root",
 })
 export class UserService {
+  public user: Observable<User> = new Observable<User>();
   public categorias: Array<string> = [];
   public paseador: Observable<Paseador> = new Observable<Paseador>();
   public planesPaseador: Observable<Paseador> = new Observable<Paseador>();
   public cuidador: Observable<Cuidador> = new Observable<Cuidador>();
   public planesCuidador: Observable<Cuidador> = new Observable<Cuidador>();
   public mascotas: Observable<mascota[]> = new Observable<mascota[]>();
+  //public paseosActivos: Observable<ContratoPaseador[]> = new Observable<ContratoPaseador>();
 
   constructor(
     private afs: AngularFirestore,
     private authSvc: AuthService,
     private obDataServ: ObtenerDataService,
   ) {
+    //this.paseosActivos = this.obDataServ.getPaseosActivos(this.authSvc.uid);
+    this.user = this.obDataServ.getUser(this.authSvc.uid);
     this.paseador = this.obDataServ.getTrabajador(this.authSvc.uid, "paseador");
     this.cuidador = this.obDataServ.getTrabajador(this.authSvc.uid, "cuidador");
     this.planesPaseador = this.obDataServ.getPlanes(

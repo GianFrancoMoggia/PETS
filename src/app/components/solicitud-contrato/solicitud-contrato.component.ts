@@ -38,6 +38,7 @@ export class SolicitudContratoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    if(this.tipo != "avisos"){
     this.afs
     .doc<any>(`contrato${this.tipo}/${this.idContrato}`)
     .valueChanges({ idField: "docId" })
@@ -66,6 +67,17 @@ export class SolicitudContratoComponent implements OnInit {
         });
       }
     });
+    }
+    else if (this.tipo == "avisos"){
+    this.afs
+    .doc<any>(`users/${this.idContrato}`)
+    .valueChanges({ idField: "docId" })
+    .subscribe((data) => {
+      this.cliente = data;
+      this.userName = data.nombre + "" + data.apellido;
+      this.imgCliente = data.foto;
+      });
+    }
   }
 
   async aceptarContrato(idContrato: string) {
@@ -76,7 +88,23 @@ export class SolicitudContratoComponent implements OnInit {
       .collection(`contrato${this.tipo}`)
       .doc(idContrato)
       .update({ estado: "aceptado" });
-    if (this.tipo == "Paseador") {
+    if (this.tipo == "avisos") {
+      this.afs
+        .collection("users")
+        .doc(this.authServ.uid)
+        .update({
+          avisos: firebase.firestore.FieldValue.arrayRemove(
+            this.idContrato
+          ),
+        });
+      this.afs
+        .collection("paseador")
+        .doc(this.idContrato)
+        .update({
+          avisar: firebase.firestore.FieldValue.arrayRemove(this.authServ.uid),
+        });
+      }
+      else if (this.tipo == "Paseador") {
       this.afs
         .collection("paseador")
         .doc(this.authServ.uid)
