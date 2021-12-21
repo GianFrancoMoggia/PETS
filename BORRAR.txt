@@ -1,1 +1,99 @@
-# PETS
+######################NOTIFICACIONES###########################
+<div *ngIf="userServ.paseador | async;let paseador">
+    <div *ngIf="paseador.solicitud_paseo.length > 0">
+      <!--<div *ngIf="hayPaseo == true">-->
+      <ion-row style="opacity: 0.8;background: #7bd7b5;box-shadow: 0px 5px 4px rgb(0 0 0 / 30%);">
+        <label style="margin: auto;font-size: x-large;color: white">Solicitudes Paseos</label>
+      </ion-row>
+      <app-solicitud-contrato *ngFor="let contrato of paseador.solicitud_paseo" idContrato={{contrato}} tipo="Paseador">
+      </app-solicitud-contrato>
+    </div>
+ </div>
+################################################################
+
+#####################SOLICITUD CONTRATO#########################
+<ion-row id="paseosActivos" *ngIf="tipo == 'paseosActivos'">
+  
+    <ion-row *ngIf="this.publicacion | async ; let publi">
+      <ion-col class='col-transito' style="position: relative; left: 40px;">
+        <ion-slides>
+          <ion-slide class='div-transito' pager="true">
+            <ion-card class="card-mascota">
+              <img style="height: auto;object-fit: cover;width: 60vw;" src="{{publi.foto}}" class="image">
+                <ion-card-header class="header-titulo-mascota">
+                  <ion-card-title class="titulo-paseo">{{publi.nombre}}</ion-card-title>
+                </ion-card-header>
+                <ion-card-subtitle>
+                  <span class="informacion-paseo"><font color="#ffbf00">★</font>{{publi.calificacion}}</span>
+                </ion-card-subtitle>
+                <ion-card-content>
+                  <span class="informacion-mascota" style="color: #7bd7b5;">Ver Más</span>
+                </ion-card-content>
+            </ion-card>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+  </ion-row>
+################################################################
+  async aceptarContrato(idContrato: string) {
+   
+    document.getElementById(this.idContrato).style.transform =
+      "translateX(-120%)";
+    await this.delay(200);
+    this.afs
+      .collection(`contrato${this.tipo}`)
+      .doc(idContrato)
+      .update({ estado: "aceptado" });
+    if (this.tipo == "Organizacion") {
+      this.afs
+        .collection("organización")
+        .doc(this.idOrga)
+        .update({
+          solicitud_transito: firebase.firestore.FieldValue.arrayRemove(
+            this.idContrato
+          ),
+        });
+      this.afs
+        .collection("organización")
+        .doc(this.idOrga)
+        .update({
+          contratos: firebase.firestore.FieldValue.arrayUnion(this.idContrato),
+        });
+      this.afs
+        .doc<Publicacion>(
+          `organización/${this.idOrga}/publicaciones/${this.idPubli}`
+        )
+        .update({
+          transito: true,
+        });
+      this.afs
+        .doc<contratoOrganizacion>(`contratoOrganizacion/${this.idContrato}`)
+        .update({
+          cambioDeEstado: new Date(),
+        });
+################################################################
+ async rechazarContrato(idContrato: string) {
+    document.getElementById(this.idContrato).style.transform =
+      "translateX(120%)";
+    await this.delay(200);
+    this.afs
+      .collection(`contrato${this.tipo}`)
+      .doc(idContrato)
+      .update({ estado: "rechazado" });
+
+    if (this.tipo == "Organizacion") {
+      this.afs
+        .collection("organización")
+        .doc(this.idOrga)
+        .update({
+          solicitud_transito: firebase.firestore.FieldValue.arrayRemove(
+            this.idContrato
+          ),
+        });
+      this.afs
+        .doc<contratoOrganizacion>(`contratoOrganizacion/${this.idContrato}`)
+        .update({
+          cambioDeEstado: new Date(),
+        });
+################################################################
