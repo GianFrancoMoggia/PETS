@@ -28,28 +28,32 @@ export class ConfiguracionesPage implements OnInit {
   barrio:string;
   orgFavoritas:Array<string>;
   solicitud_admin:Array<string>;
+  contratosActivos: Map<string,string>;
   
   // private imagePicker: ImagePicker
   constructor(private afs: AngularFirestore, private aServ:AuthService,private camera: Camera,private file: File, public actionSheetController: ActionSheetController,) {
-    
-      this.nombre=this.aServ.user$.nombre;
-      this.apellido=this.aServ.user$.apellido;
-      this.DNI=this.aServ.user$.DNI;
-      this.correo=this.aServ.user$.email;
-      this.fechaNacimiento=this.aServ.user$.nacimiento;
-      this.uid=this.aServ.user$.uid;
-      this.administrando=this.aServ.user$.administrando;
-      this.foto=this.aServ.user$.foto;
-      this.barrio=this.aServ.user$.barrio;
-      this.orgFavoritas=this.aServ.user$.orgFavoritas
-      this.solicitud_admin=this.aServ.user$.solicitud_admin
+    this.aServ.user$.subscribe((usuario)=>{
+      this.nombre=usuario.nombre;
+      this.apellido=usuario.apellido;
+      this.DNI=usuario.DNI;
+      this.correo=usuario.email;
+      this.fechaNacimiento=usuario.nacimiento;
+      this.uid=usuario.uid;
+      this.administrando=usuario.administrando;
+      this.foto=usuario.foto;
+      this.barrio=usuario.barrio;
+      this.orgFavoritas=usuario.orgFavoritas
+      this.solicitud_admin=usuario.solicitud_admin;
+      this.contratosActivos=usuario.contratosActivos;
    
+    })
+      
   }
 
   ngOnInit() {}
 
   async cambiarDatos(){
-    this.aServ.actualizarDatos(this.nombre,this.apellido,this.correo,this.fechaNacimiento,this.DNI,this.uid,this.administrando,this.foto,this.barrio,this.orgFavoritas,this.solicitud_admin);
+    this.aServ.actualizarDatos(this.nombre,this.apellido,this.correo,this.fechaNacimiento,this.DNI,this.uid,this.administrando,this.foto,this.barrio,this.orgFavoritas,this.solicitud_admin,this.contratosActivos);
   }
 
 

@@ -5,6 +5,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { OrganizacionService } from "../../services/organizacion.service";
 import { UserService } from 'src/app/services/user.service';
 import { ContratoPaseador } from 'src/app/shared/contrato-paseador.interface';
+import { Observable } from 'rxjs';
+import { userProfile } from 'src/app/shared/user.interface';
 
 @Component({
   selector: 'app-menu',
@@ -12,6 +14,9 @@ import { ContratoPaseador } from 'src/app/shared/contrato-paseador.interface';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
+
+  public usuario:userProfile
+  public adminDeOrgas:boolean
  
   static getElementById(arg0: string): HTMLTextAreaElement {
     throw new Error('Method not implemented.');
@@ -19,6 +24,10 @@ export class MenuComponent implements OnInit {
 
 
   constructor(private menuCtrl: MenuController,private userServ: UserService, private aServ:AuthService, private afs: AngularFirestore, private orga:OrganizacionService) { 
+    this.aServ.user$.subscribe((usuario)=>{
+      this.usuario=usuario;
+    })
+
   }
 
   ngOnInit() {
@@ -26,6 +35,8 @@ export class MenuComponent implements OnInit {
       if (element.solicitud_paseo.length > 0) document.getElementById("a").setAttribute("name","mail-unread-outline")
       else document.getElementById("a").setAttribute("name","mail-outline")
     })
+
+    
   }
   
   changeIconMenu(){

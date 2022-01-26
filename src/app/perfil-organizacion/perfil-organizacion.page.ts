@@ -24,6 +24,8 @@ export class PerfilOrganizacionPage implements OnInit {
   }
 
   ngOnInit() {
+    this.idOrganizacion = this.org.oid
+    this.publiServ.publicaciones = this.publiServ.getPublicaciones(this.org.oid)
   }
 
   customActionSheetOptions: any = {

@@ -1,0 +1,13 @@
+<ion-card [routerLink]="['/conversacion',idChat]">
+  <ion-row>
+    <ion-col style="display: contents">
+      <ion-avatar>
+        <img  src="{{destinatario.foto}}">
+      </ion-avatar>
+    </ion-col>
+    <ion-col>
+      <ion-card-title style="font-weight: bold;color: #7bd7b5;">{{destinatario.nombre}} {{destinatario.apellido}}</ion-card-title>
+      <ion-card-subtitle >{{ultMensaje}}</ion-card-subtitle>
+    </ion-col>
+  </ion-row>
+</ion-card>

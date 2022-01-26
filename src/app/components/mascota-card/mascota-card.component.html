@@ -1,13 +1,15 @@
-<ion-card class="card-mascota">
-  <img src="https://firebasestorage.googleapis.com/v0/b/pets-5ca11.appspot.com/o/89592b3392fee110134235e95d80dbf7.jpg?alt=media&token=ca0f279f-f431-49f4-a026-262c65b41ae2">
+<ion-card class="card-mascota" [routerLink]="['/mascota',idUser,id]">
+  <div *ngFor="let fotuli of mascota1.fotos">
+    <img src={{fotuli}}>
+  </div>
   <ion-row>
     <ion-col>
       <ion-card-header class="header-titulo-paseo">
-        <ion-card-title class="titulo-paseo">Biscut</ion-card-title>
+        <ion-card-title class="titulo-paseo">{{this.mascota1.nombre}}</ion-card-title>
         <span class="informacion-mascota">Ver más</span>
       </ion-card-header>
       <ion-card-content class="informacion-mascota-calificacion">
-        <span>(calificación)</span>
+        <span>{{mascota1.calificacion}}</span>
       </ion-card-content>
     </ion-col>
   </ion-row>

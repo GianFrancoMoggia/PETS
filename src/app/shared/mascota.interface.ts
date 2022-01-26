@@ -4,7 +4,7 @@ export interface mascota{
     descripcion:string;
     especie:string;
     docId:string
-    foto: string;
+    fotos: Array<string>;
     calificacion:number;
 }
   

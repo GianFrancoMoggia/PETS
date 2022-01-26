@@ -45,6 +45,7 @@
     color: white;
     height: 30px;
     border-radius: 100px;
+    font-weight: bold;
 }
 
 .titulo-servicio{
@@ -54,4 +55,9 @@
 .my-custom-class{
     --min-width: 80% !important;
     --min-height: 400px !important;
+}
+
+.conectAlert{
+    --backdrop-opacity:0%;
+    //--height:90px;
 }

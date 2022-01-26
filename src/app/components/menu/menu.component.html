@@ -3,10 +3,10 @@
     <ion-menu-button slot="start" menu="ion-menu" (click)="changeIconMenu()">
       <ion-icon id="menu-icon" name="menu-outline"></ion-icon>
     </ion-menu-button>
-    <ion-label *ngIf="aServ.user$" class="ion-label-toolbar" >{{ aServ.user$.nombre }} {{aServ.user$.apellido}}</ion-label>
+    <ion-label *ngIf="usuario" class="ion-label-toolbar" >{{ usuario.nombre }} {{usuario.apellido}}</ion-label>
     <ion-label class="label-toolbar" id="toolbar">  </ion-label>
     <ion-button id="mail-button" slot="end" routerLink="/chat">
-      <ion-icon style="font-size: 32px;position: absolute;" name="mail-outline"></ion-icon>
+      <ion-icon style="font-size: 30px;position: absolute;" name="chatbubbles-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>
@@ -15,11 +15,11 @@
     <ion-list>
       <ion-item>
         <ion-avatar>
-          <img *ngIf="aServ.user$" src="{{aServ.user$.foto}}" >
+          <img *ngIf="usuario" src="{{usuario.foto}}" >
         </ion-avatar>
       </ion-item>
       <ion-item>
-        <ion-label *ngIf="aServ.user$" (click)="closeMenu()" class="h2-nombre-usuario" id="nombre-apellido">{{ aServ.user$.nombre }} {{aServ.user$.apellido}}</ion-label>
+        <ion-label *ngIf="usuario" (click)="closeMenu()" class="h2-nombre-usuario" id="nombre-apellido">{{ usuario.nombre }} {{usuario.apellido}}</ion-label>
       </ion-item>
       <ion-item>
         <a menuClose routerLink="/home" (click)="closeMenu()" style="display: block; text-align: center;">
@@ -33,7 +33,7 @@
           <h6>Perfil</h6>
         </a>
       </ion-item>
-      <ion-item *ngIf="orga.organizaciones.length > 0">
+      <ion-item *ngIf="(orga.organizaciones | async )?.length > 0">
         <a routerLink="/perfil-organizacion" (click)="closeMenu()" style="display: block; text-align: center;">
           <ion-icon name="business-outline"></ion-icon>
           <h6>Perfil de Organizacion</h6>

@@ -20,10 +20,8 @@ export class HomePage implements OnInit{
 
   constructor(private aServ: AuthService,private userServ: UserService, private afs:AngularFirestore) {}
 
-  async ngOnInit() {
-
-    
-    
+  ngOnInit() {
+    //this.aServ.logout()
   }
 
 

@@ -10,29 +10,18 @@
   <!---->
   <ion-row class="columna-foto-datos" #toolbar>
     <ion-col>
-      <div class="div-contiene-foto-nombre" >
+      <div class="div-contiene-foto-nombre" *ngIf="usuario">
         <ion-avatar>
-          <img *ngIf="aServ.user$" src="{{aServ.user$.foto}}" >
+          <img  src="{{usuario.foto}}" >
         </ion-avatar>
         <div class="div-contiene-nombre-provincia">
           <div class="div-nombre-usuario">
-            <h2 class="h2-nombre-usuario" *ngIf="aServ.user$">{{ aServ.user$.nombre }} {{aServ.user$.apellido}}</h2>
+            <h2 class="h2-nombre-usuario">{{ usuario.nombre }} {{usuario.apellido}}</h2>
           </div>
           <div class="div-provincia-usuario">
-            <h3 class="h2-provincia-usuario" *ngIf="aServ.user$">{{ aServ.user$.barrio }}</h3>
+            <h3 class="h2-provincia-usuario">{{ usuario.barrio }}</h3>
           </div>
         </div>
-      </div>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="12">
-      <div>
-        <ion-segment scrollable >
-          <ion-segment-button *ngFor="let categoria of userServ.categorias" value={{categoria}}>
-            <ion-label>{{categoria}}</ion-label>
-          </ion-segment-button>
-        </ion-segment>
       </div>
     </ion-col>
   </ion-row> 
@@ -47,76 +36,100 @@
 
   <div class="fondo-color-casi-blanco">
     <!------------------------------------paseos------------------------------------------>
-    <ion-row id="Paseos" *ngIf="userServ.planesPaseador | async">
-      <ion-col >
-        <ion-row *ngIf="userServ.paseador | async; let paseador">
-          <ion-row>
-            <h2 class="titulo-apartado-paseo" >Paseos</h2>
-          </ion-row>
-          <ion-row *ngFor="let plan of userServ.planesPaseador | async" style="margin: auto;width: 100%;">
-            <div class="div-paseos">
-              <ion-card class="card-paseo">
-                <ion-row>
-                  <div>
-                    <img class="foto-mapa" src='../../assets/images/mapa.png'>
-                  </div>
-                  <ion-col>
-                    <ion-card-header class="header-titulo-paseo">
-                      <ion-card-title class="titulo-paseo">{{plan.hora}}</ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content>
-                      <span class="informacion-paseo">{{plan.dias}}</span><br>
-                      <span class="informacion-paseo">{{plan.hora}}</span>
-                      <ion-row>
-                        <span class="informacion-paseo">Cupos disponibles:</span>
-                        <span class="informacion-paseo">
-                          {{plan.cupo}}
-                        </span>
-                      </ion-row>
-                      <button class="button-green" style="width: 100%;" >Editar</button>
-                    </ion-card-content>
-                  </ion-col>
-                </ion-row>
-              </ion-card>
-            </div>
-          </ion-row >
-        </ion-row>  
+    <ion-row>
+      <ion-col>
+        <ion-row>
+          <h2 class="titulo-apartado-paseo" >Paseos</h2>
+        </ion-row>
+        <div *ngIf="(userServ.paseador | async)?.calificacion_promedio>=0, then thenBlock2 else elseBlock2"></div> 
+        <ng-template #thenBlock2>
+          <ion-row *ngIf="userServ.paseador | async; let paseador">
+            <ion-row *ngFor="let plan of userServ.planesPaseador | async" style="margin: auto;width: 100%;">
+              <div class="div-paseos">
+                <ion-card class="card-paseo">
+                  <ion-row>
+                    <div>
+                      <img class="foto-mapa" src='../../assets/images/mapa.png'>
+                    </div>
+                    <ion-col>
+                      <ion-card-header class="header-titulo-paseo">
+                        <ion-card-title class="titulo-paseo">{{plan.hora}}</ion-card-title>
+                      </ion-card-header>
+                      <ion-card-content>
+                        <span class="informacion-paseo">{{plan.dias}}</span><br>
+                        <span class="informacion-paseo">{{plan.hora}}</span>
+                        <ion-row>
+                          <span class="informacion-paseo">Cupos disponibles:</span>
+                          <span class="informacion-paseo">{{plan.cupo}}</span>
+                        </ion-row>
+                        <button class="button-green" style="width: 100%;" >Editar</button>
+                      </ion-card-content>
+                    </ion-col>
+                   </ion-row>
+                </ion-card>
+              </div>
+            </ion-row>
+          </ion-row>  
+        </ng-template>
+        <ng-template #elseBlock2>
+          <ion-button class="button-green" style="--background: rgb(123, 215, 181)" routerLink="/crear-paseo">Hacerme paseador ya</ion-button>
+        </ng-template>
       </ion-col>
     </ion-row>
    <!------------------------------cuidados----------------------------------------------------->    
-    <ion-row id="Cuidados" *ngIf="userServ.planesCuidador | async">
+   <ion-row>
+
       <ion-col>
-        <ion-row *ngIf="userServ.cuidador | async; let cuidador">
-          <ion-row>
-            <h2 class="titulo-apartado-paseo" >Cuidados</h2>
-          </ion-row>
-          <h3 class="subitulo-cuidados">Precio por día de cuidado</h3>
-          <h3 class="precio-dia-cuidado">: ${{cuidador.precio_dia}}</h3>
+
+        <ion-row>
+          <h2 class="titulo-apartado-paseo" >Cuidados</h2>
         </ion-row>
-        <ion-row >
-          <div class="div-paseos" *ngFor="let oferta of userServ.planesCuidador | async ">
-            <ion-card class="card-paseo">
-              <ion-row>
-                <ion-col>
-                  <ion-card-header class="header-titulo-paseo">
-                    <ion-card-title class="titulo-paseo">Promo 1</ion-card-title>
-                  </ion-card-header>
-                  <ion-card-content>
-                    <span class="informacion-paseo">Precio: {{oferta.costo}}</span><br>
-                    <span class="informacion-paseo">Cantidad de dias: {{oferta.cantidad_dias}}</span>
-                  </ion-card-content>
-                </ion-col>
-                <div>
-                  <button class="boton-editar-cuidados">Editar</button>
-                </div>
-              </ion-row>
-            </ion-card>
-          </div>
+  
+        <ion-row>
+          <ion-col>
+            <div *ngIf="(userServ.cuidador | async)?.precio_dia, then thenBlock else elseBlock"></div> 
+            <ng-template #thenBlock>
+              <div>
+                <ion-row *ngIf="userServ.cuidador | async; let cuidador">
+                  <h3 class="subitulo-cuidados">Precio por día de cuidado</h3>
+                  <h3 class="precio-dia-cuidado">: ${{cuidador.precio_dia}}</h3>
+                </ion-row>
+                <ion-row>
+                  <mat-raised-button routerLink="/plan-cuidado">Editar</mat-raised-button>
+                </ion-row>
+                <ion-row>
+                  <div class="div-paseos" *ngFor="let oferta of userServ.planesCuidador | async ">
+                    <ion-card class="card-paseo">
+                      <ion-row>
+                        <ion-col>
+                          <ion-card-header class="header-titulo-paseo">
+                            <ion-card-title class="titulo-paseo">Promo 1</ion-card-title>
+                          </ion-card-header>
+                          <ion-card-content>
+                            <span class="informacion-paseo">Precio: {{oferta.costo}}</span><br>
+                            <span class="informacion-paseo">Cantidad de dias: {{oferta.cantidad_dias}}</span>
+                          </ion-card-content>
+                        </ion-col>
+                        <div>
+                          <button class="boton-editar-cuidados">Editar</button>
+                        </div>
+                      </ion-row>
+                    </ion-card>
+                  </div>
+                </ion-row>
+              </div>
+            </ng-template>
+            <ng-template #elseBlock>
+                <ion-button class="button-green" style="--background: rgb(123, 215, 181)" routerLink="/plan-cuidado">Hacerme cuidador ya</ion-button>
+            </ng-template>
+          </ion-col>
         </ion-row>
+
       </ion-col>
-    </ion-row> 
+
+  </ion-row>
      <!------------------------------mascotas----------------------------------------------------->
-    <ion-row id="Mascotas" *ngIf="userServ.mascotas | async">
+    <ion-row id="Mascotas" *ngIf="(userServ.mascotas | async)?.length">
       <ion-col>
         <ion-row *ngIf="userServ.mascotas | async; let mascota">
           <ion-row>
@@ -124,25 +137,7 @@
           </ion-row>
           <div class='div-mascotas'>
             <ion-slides *ngFor="let mascota of userServ.mascotas | async" class='div-mascotas' pager="true">
-              <ion-slide>
-                <ion-card class="card-mascota">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/pets-5ca11.appspot.com/o/sailor%20mercury.jpg?alt=media&token=b49aa0f9-43a1-4999-b78e-e168c8e62eb8" class="image">
-                  <ion-row>
-                    <ion-col>
-                      <ion-card-header class="header-titulo-mascota">
-                        <ion-card-title class="titulo-paseo">{{mascota.nombre}}</ion-card-title>
-                      </ion-card-header>
-                      <ion-card-content>
-                        <span class="informacion-paseo">calificación</span>
-                      </ion-card-content>
-                    </ion-col>
-                    <ion-card-content>
-                      <span class="informacion-mascota">Ver Más</span>
-                    </ion-card-content>
-                  </ion-row>
-                </ion-card>
-              </ion-slide>
-              
+              <app-mascota-card id={{mascota.docId}} idUser={{usuario.uid}}></app-mascota-card>
             </ion-slides>
           </div>
         </ion-row>
@@ -150,8 +145,8 @@
     </ion-row>
   </div> 
 </ion-content>
-<ion-fab vertical="bottom" horizontal="end">
-  <ion-fab-button (click)="popController.presentPopover()">
+<ion-fab class="button-perfiladd" vertical="bottom" horizontal="end" style = "--background: rgb(123, 215, 181)" > 
+  <ion-fab-button (click)="popController.presentPopover()" >
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>

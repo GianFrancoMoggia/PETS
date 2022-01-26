@@ -1,0 +1,149 @@
+.div-contiene-foto-nombre{
+    display: flex;
+    width: fit-content;
+    margin-left: 10px;
+    position: relative;
+    bottom: 10px;
+}
+
+.item-publicaciones{
+    -ms-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+    position: relative;
+    bottom: 5px;
+    left: 7px;
+}
+
+.label-publicaciones{
+    position: relative;
+    left: 10px;
+    font-size: medium;
+    color: black; 
+}
+
+.div-nombre-organizacion,.div-localizacion-org{
+    margin-top: 0px;
+    margin-left: 10px;
+}
+
+.div-contiene-nombre-provincia{
+    margin-left: 10px;
+}
+
+#org-avatar{
+    height: 100px;
+    width: 100px;
+    // margin-left: 30px;
+    box-shadow: 5px 2px 20px 2px rgb(0 0 0 / 30%);
+}
+
+.label-organizacion {
+    text-align: center;
+    font-size: large;
+    color:white;
+    position: relative;
+    top: 5px;
+}
+
+.label-toolbar{
+    position: fixed;
+    top: 40px;
+    left: 50px;
+    font-size: 10px;
+}
+
+.boton-publicaciones{
+    position: relative;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.foto{
+    position: relative;
+    width: 75%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.centrado{
+    text-align: center;
+}
+
+.izquierda{
+    text-align: left;
+}
+
+.nombre-publi{
+    position: relative;
+    bottom: 30px;
+    font-weight: bolder;
+    font-size: 30px;
+    color: black; 
+}
+
+.label-desc{
+    position:relative;
+}
+
+.label-cuidados{
+    position: relative;
+}
+
+.boton-desc{
+    position:relative;
+    color: black;
+    background-color: #51D1F6;
+    border-radius: 5px;
+}
+
+.boton-cuidados{
+    position:relative;
+    color: black;
+    background-color: #51D1F6;
+    border-radius: 5px;
+}
+
+.svg-loader{
+    display:flex;
+    position: relative;
+    align-content: space-around;
+    justify-content: center;
+    right: 192px;
+    top: 5px;
+  }
+  .loader-svg{
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    fill: none;
+    stroke-width: 5px;
+    stroke-linecap: round;
+    stroke: #42d77d;
+  }
+  .loader-svg.bg{
+    stroke-width: 8px;
+    stroke: #cfffca
+  }
+
+  .animate{
+    stroke-dasharray: 242.6;
+    animation: fill-animation 0.90s cubic-bezier(1,1,1,1) 0s infinite;
+  }
+  
+  @keyframes fill-animation{
+    0%{
+      stroke-dasharray: 40 242.6;
+      stroke-dashoffset: 282.6;
+    }
+    50%{
+      stroke-dasharray: 141.3;
+      stroke-dashoffset: 141.3;
+    }
+    100%{
+      stroke-dasharray: 40 242.6;
+      stroke-dashoffset: 0;
+    }
+  }

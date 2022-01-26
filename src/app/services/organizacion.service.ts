@@ -18,49 +18,36 @@ import { User } from "../shared/user.interface";
 })
 export class OrganizacionService {
   public oid: string;
-  public organizacion: Organizacion;
-  public organizaciones: Organizacion[] = [];
+  public organizacion: Observable<Organizacion>; //organización que se está administrando actualmente
+  public organizaciones: Observable<Organizacion[]>; //todas las organizaciones que el usuario en sesión administra
 
   constructor(private afs: AngularFirestore, private authSvc: AuthService) {
-    afs.firestore
-      .collection("organización")
-      .where("administradores", "array-contains", this.authSvc.user$.uid)
-      .get()
-      .then((querySnapshot) => {
-        this.organizacion = null;
-        this.organizaciones = [];
-        querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          let orgAux: Organizacion = {
-            administradores: doc.data()["administradores"],
-            mail: doc.data()["email"],
-            nombre: doc.data()["nombre"],
-            foto: doc.data()["foto"],
-            localizacion: doc.data()["localizacion"],
-            oid: doc.data()["oid"],
-          };
-          this.organizaciones.push(orgAux);
-          if (this.authSvc.user$.administrando == doc.id) {
-            this.oid = doc.id;
-            this.organizacion = orgAux;
-          }
-        });
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
+    this.authSvc.user$.subscribe((usuario)=>{
+      this.organizaciones=this.afs.collection<Organizacion>(`organización`,ref=> ref.where("administradores","array-contains",usuario.uid)).valueChanges()
+      this.organizacion=this.afs.doc<Organizacion>(`organización/${usuario.administrando}`).valueChanges()
+      this.oid=usuario.administrando
+    })
+    
   }
 
   actualizarOrganizacion(oid: string) {
-    this.organizaciones.forEach((orgAux) => {
-      if (orgAux.oid == oid) {
-        this.oid = oid;
-        this.organizacion = orgAux;
-        this.afs
-          .collection("users")
-          .doc(this.authSvc.uid)
-          .update({ administrando: oid });
-      }
-    });
+    this.oid=oid;
+    this.organizacion=this.afs.doc<Organizacion>(`organización/${oid}`).valueChanges()
+    this.afs.collection("users").doc(this.authSvc.uid).update({ administrando: oid });
   }
+
+
+  /*public getCurrentUserAssignments(): Observable<any> {
+    return new Observable((observer) => {
+        const query = this.afs.firestore.collection("organización")
+          .where("administradores", "array-contains", this.authSvc.user$.uid);
+
+        let _currentUserAssignments = query.get().then(querySnapshot => {
+            this.ngZone.run(() => {
+                observer.next(querySnapshot.docSnapshots);
+            });
+        });
+    });
+}*/
+
 }

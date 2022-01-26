@@ -1,9 +1,20 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>chat</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
-
-</ion-content>
+<div id="chat-container">
+<ion-row style="background: #f8f8f8;text-align: center; "> 
+  <ion-col>
+    <div><h3>Mis chats</h3></div>
+  </ion-col>
+</ion-row>
+<div *ngFor="let chat of chatServ.chatsUsuarioCliente | async ">
+  <div *ngIf="this.setValoresID(chat.idTrabajador,chat.idChat)">
+    <app-chat-card idDestinatario={{idDestinatario}} idChat={{idChat}}></app-chat-card>
+  </div>
+  
+</div>
+<div *ngFor="let chat of chatServ.chatsUsuarioTrabajador | async ">
+  <div *ngIf="this.setValoresID(chat.idCliente,chat.idChat)">
+    <app-chat-card idDestinatario={{idDestinatario}} idChat={{idChat}}></app-chat-card>
+  </div>
+  
+</div>
+</div>

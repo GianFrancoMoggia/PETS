@@ -5,4 +5,6 @@ export interface Organizacion{
     foto:string;
     localizacion:string;
     oid:string;
+    solicitud_transito:Array<string>;
+    contratos:Array<string>;
   }

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>conversacion</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngFor="let mensaje of chat | async">
+    <div *ngIf="mensaje.emisor == usuario.uid; else mensajeEntrante" style="text-align: right;">
+      <ion-row>
+        <ion-col>
+          
+        </ion-col>
+        <ion-col>
+          {{mensaje.contenido}}
+        </ion-col>
+      </ion-row>
+    </div>
+    <ng-template #mensajeEntrante>
+      <div style="text-align: left;">{{mensaje.contenido}}</div>
+    </ng-template>
+  </div>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label stacked>Mensaje</ion-label>
+        <ion-input type="text" text-right id="input" [(ngModel)]="mensaje" ></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <button id="reservar" (click)="enviarMensaje()">Enviar</button>
+    </ion-col>
+  </ion-row>
+</ion-content>

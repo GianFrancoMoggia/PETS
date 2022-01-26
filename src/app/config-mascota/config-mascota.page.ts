@@ -3,6 +3,7 @@ import { EspecieService } from '../services/especie.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { ActionSheetController } from '@ionic/angular';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-config-mascota',
@@ -11,7 +12,19 @@ import { ActionSheetController } from '@ionic/angular';
 })
 export class ConfigMascotaPage implements OnInit {
 
-  constructor(private especieServ:EspecieService,private camera: Camera,private file: File, public actionSheetController: ActionSheetController) { }
+  nombre:string;
+  especieMascota:string;
+  descripcion:string;
+  cuidado:string;
+
+  constructor(private especieServ:EspecieService,private camera: Camera,private file: File, public actionSheetController: ActionSheetController, public uServ:UserService) { 
+
+      this.nombre;
+      this.especieMascota;
+      this.descripcion;
+      this.cuidado;
+
+  }
 
   ngOnInit() {
   }
@@ -55,6 +68,10 @@ export class ConfigMascotaPage implements OnInit {
       ]
     });
     await actionSheet.present();
+  }
+
+  subidaAnimal(){
+    this.uServ.crearMascota(this.nombre,this.especieMascota,this.descripcion,this.cuidado);
   }
 
 }

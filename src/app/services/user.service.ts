@@ -56,7 +56,19 @@ export class UserService {
       "cuidador"
     );
     this.mascotas = this.obDataServ.getMascotas(this.authSvc.uid);
+   { 
+    this.authSvc.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.paseador = this.obDataServ.getTrabajador(user.uid, "paseador");
+        this.cuidador = this.obDataServ.getTrabajador(user.uid, "cuidador");
+        this.planesPaseador = this.obDataServ.getPlanes(user.uid,"paseador");
+        this.planesCuidador = this.obDataServ.getPlanes(user.uid,"cuidador");
+        this.mascotas = this.obDataServ.getMascotas(user.uid);
+      }
+    });
+    
   }
+}
 
   async crearNuevoPaseo(
     costoA: number,
@@ -241,5 +253,15 @@ export class UserService {
         }
       })
     })*/
+  }
+
+  async crearMascota(nombreA:string,especieMascotaA:string,descripcionA:string,cuidadoA:string){
+    const creoMascota =  this.afs.collection("users").doc(this.authSvc.uid).collection("mascota").add({
+      nombre : nombreA,
+      cuidado : cuidadoA,
+      descripcion : descripcionA,
+      especie : especieMascotaA,
+      calificacion : 0
+    });
   }
 }

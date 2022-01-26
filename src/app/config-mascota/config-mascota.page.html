@@ -15,7 +15,7 @@
         <ion-col>
           <a>Nombre:</a>
           <ion-item lines="full" style="margin-left: 5px;">
-            <ion-input type="text" required></ion-input>
+            <ion-input type="text" [(ngModel)]="nombre" required></ion-input>
           </ion-item>
         </ion-col>
 
@@ -26,7 +26,7 @@
         <ion-col>
           <a>Especie:</a>
           <ion-item lines="full" style="margin-left: 5px;">
-            <ion-select placeholder="Select One">
+            <ion-select [(ngModel)]="especieMascota" placeholder="Select One">
               <ion-select-option *ngFor="let especieMascota of this.especieServ.especies" value="{{especieMascota.nombreEspecie}}">{{especieMascota.nombreEspecie}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -38,7 +38,7 @@
         <ion-col>
           <a>Descripcion:</a>
           <ion-item lines="full" style="margin-left: 5px;">
-            <ion-input type="text" required></ion-input>
+            <ion-input type="text" [(ngModel)]="descripcion" required></ion-input>
           </ion-item>
         </ion-col>
 
@@ -48,7 +48,7 @@
         <ion-col>
           <a>Cuidados:</a>
           <ion-item lines="full" style="margin-left: 5px;">
-            <ion-input type="text" required></ion-input>
+            <ion-input type="text" [(ngModel)]="cuidado" required></ion-input>
           </ion-item>
         </ion-col>
 
@@ -65,7 +65,7 @@
 
     </ion-col>
 
-    <button type="submit" class="botonAceptar" (click)="cambiarDatos()">Aceptar</button>
+    <button type="submit" class="botonAceptar" (click)="subidaAnimal()">Aceptar</button>
   </div>
 
 </ion-content>

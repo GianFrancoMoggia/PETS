@@ -1,8 +1,8 @@
 <ion-list>
   <ion-list-header class="popover-header">Agregar</ion-list-header>
-  <ion-item button (click)="redirectTo('crear-paseo')" class="popover-item">Plan de paseo</ion-item>
-  <ion-item button (click)="redirectTo('plan-cuidado')" class="popover-item">Plan de cuidador</ion-item>
-  <ion-item *ngIf="uServ.cuidador | async" button (click)="redirectTo('combo-cuidador')" class="popover-item">Combo cuidador</ion-item>
+  <ion-item *ngIf="(uServ.paseador | async)?.calificacion_promedio>=0"  button (click)="redirectTo('crear-paseo')" class="popover-item">Plan de paseo</ion-item>
+ <!--<ion-item button (click)="redirectTo('plan-cuidado')" class="popover-item">Plan base cuidador</ion-item>-->
+  <ion-item *ngIf="(uServ.cuidador | async)?.precio_dia" button (click)="redirectTo('combo-cuidador')" class="popover-item">Combo cuidador</ion-item>
   <ion-item button (click)="redirectTo('config-mascota')" class="popover-item">Mascota</ion-item>
 </ion-list>
 <!--Hacer un ngIf que muestre una opcion si es cuidador y otra sino-->

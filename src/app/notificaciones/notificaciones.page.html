@@ -14,10 +14,23 @@
 
 
 <ion-content>
+  <!--<div *ngIf="org.organizaciones.length > 0">-->
+    <div *ngFor="let orgAux of this.administrando | async">
+      <div *ngIf="orgAux.solicitud_transito.length > 0">
+        <!--<div *ngIf="hayTransito == true">-->
+        <ion-row style="opacity: 0.8;background: #7bd7b5;box-shadow: 0px 5px 4px rgb(0 0 0 / 30%);">
+          <label style="margin: auto;font-size: x-large;color: white">{{orgAux.nombre}}</label>
+        </ion-row>
+        <app-solicitud-contrato *ngFor="let contrato of orgAux.solicitud_transito" idContrato={{contrato}} tipo="Organizacion" idOrga={{orgAux.oid}}>
+        </app-solicitud-contrato>
+      </div>
+    </div>
+  <!--</div>-->
   <div *ngIf="userServ.paseador | async;let paseador">
     <div *ngIf="paseador.solicitud_paseo.length > 0">
+      <!--<div *ngIf="hayPaseo == true">-->
       <ion-row style="opacity: 0.8;background: #7bd7b5;box-shadow: 0px 5px 4px rgb(0 0 0 / 30%);">
-        <label style="margin: auto;font-size: x-large;color: white">Solicitud Paseo</label>
+        <label style="margin: auto;font-size: x-large;color: white">Solicitudes Paseos</label>
       </ion-row>
       <app-solicitud-contrato *ngFor="let contrato of paseador.solicitud_paseo" idContrato={{contrato}} tipo="Paseador">
       </app-solicitud-contrato>
@@ -25,13 +38,15 @@
   </div>
   <div *ngIf="userServ.cuidador | async;let cuidador">
     <div *ngIf="cuidador.solicitud_cuidado.length > 0">
+      <!--<div *ngIf="hayCuidado == true">-->
       <ion-row style="opacity: 0.8;background: #7bd7b5;box-shadow: 0px 5px 4px rgb(0 0 0 / 30%);">
-        <label style="margin: auto;font-size: x-large;color: white">Solicitud Cuidado</label>
+        <label style="margin: auto;font-size: x-large;color: white">Solicitudes Cuidados</label>
       </ion-row>
       <app-solicitud-contrato *ngFor="let contrato of cuidador.solicitud_cuidado" idContrato={{contrato}} tipo="Cuidador">
       </app-solicitud-contrato>
     </div>
   </div>
+  
   <!-- <div *ngIf="authSvc.user$ | async;let user">
     <div *ngIf="user.solicitud_admin.length > 0">
       <ion-row style="opacity: 0.8;background: #7bd7b5;box-shadow: 0px 5px 4px rgb(0 0 0 / 30%);">

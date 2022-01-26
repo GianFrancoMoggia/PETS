@@ -5,10 +5,16 @@
         <img *ngIf="imgCliente" src="{{imgCliente}}">
       </ion-avatar>
     </ion-col>
-    <ion-col>
-      <ion-card-title style="font-weight: bold;color: #7bd7b5;">{{this.userName}}</ion-card-title>
-      <ion-card-subtitle *ngIf="contrato">{{this.barrio}}</ion-card-subtitle>
-      <ion-card-subtitle *ngIf="contrato">{{this.contrato.fechaContratacion}}</ion-card-subtitle>
+    <ion-col style="width: 180px;">
+      <div *ngIf="tipo == 'Organizacion'" style="width: 180px;">
+        <ion-card-title style="font-size: medium; font-weight: bold;color: #7bd7b5; width: 180px;">{{this.userName}}&nbsp;&nbsp;{{this.emojiTipo}}</ion-card-title>
+        <ion-card-subtitle id="mostrarTipo" style="font-size: medium; width: 100px;"><font color="#AAAAAA">{{this.tipo}}</font></ion-card-subtitle>
+      </div>
+      <div *ngIf="tipo != 'Organizacion'">
+        <ion-card-title style="font-size: medium; font-weight: bold;color: #7bd7b5;">{{this.userName}}</ion-card-title>
+        <ion-card-subtitle *ngIf="contrato" style="font-size: small; width: 100px;">{{this.contrato.fechaContratacion}}</ion-card-subtitle>
+      </div>
+      <ion-card-subtitle *ngIf="contrato" style="width: 100px;">{{this.barrio}}</ion-card-subtitle>
     </ion-col>
     <ion-col style="margin: auto;text-align: end;">
       <ion-button class="button-ver-mas" (click)="expandirSolicitud()">{{botonInfo}}</ion-button>
@@ -21,14 +27,14 @@
     </ion-row> -->
     <ion-row>
       <div style="margin: auto;">
-      <div class="dia-semana" id="{{idContrato}}Lunes" >L</div>
-      <div class="dia-semana" id="{{idContrato}}Martes" >M</div>
-      <div class="dia-semana" id="{{idContrato}}Miercoles" >M</div>
-      <div class="dia-semana" id="{{idContrato}}Jueves" >J</div>
-      <div class="dia-semana" id="{{idContrato}}Viernes" >V</div>
-      <div class="dia-semana" id="{{idContrato}}Sabado" >S</div>
-      <div class="dia-semana" id="{{idContrato}}Domingo" >D</div>
-    </div>
+        <div class="dia-semana" id="{{idContrato}}Lunes"      >   Lu   </div>
+        <div class="dia-semana" id="{{idContrato}}Martes"     >   Ma   </div>
+        <div class="dia-semana" id="{{idContrato}}Miercoles"  >   Mi   </div>
+        <div class="dia-semana" id="{{idContrato}}Jueves"     >   Ju   </div>
+        <div class="dia-semana" id="{{idContrato}}Viernes"    >   Vi   </div>
+        <div class="dia-semana" id="{{idContrato}}Sabado"     >   Sa   </div>
+        <div class="dia-semana" id="{{idContrato}}Domingo"    >   Do   </div>
+      </div>
     </ion-row>
   </ion-col>
   
@@ -37,22 +43,21 @@
       <ion-row *ngIf="mascotas; let mascota">
         <!-- <ion-row style="width: 100%;">
           <h2>Mascotas:</h2>
-        </ion-row> -->
+        <> -->
  
           <ion-slides>
             <ion-slide *ngFor="let mascota of mascotas" class='div-mascotas' pager="true">
-              <ion-card class="card-mascota">
-                <img style="height: 160px;object-fit: cover;width: 60vw;" src="{{mascota.foto}}" class="image">
+              <ion-card class="card-transito">
+                <img style="height: auto;object-fit: cover;width: 60vw;" src="{{mascota.fotos}}" class="image">
                   <ion-card-header class="header-titulo-mascota">
                     <ion-card-title class="titulo-paseo">{{mascota.nombre}}</ion-card-title>
                   </ion-card-header>
                   <ion-card-subtitle>
-                    <span class="informacion-paseo">calificación:  {{mascota.calificacion}}
-                      <ion-icon name="star-outline"></ion-icon>
+                    <span class="informacion-paseo"><font color="#ffbf00">★</font>{{mascota.calificacion}}
                     </span>
                   </ion-card-subtitle>
                   <ion-card-content>
-                    <span class="informacion-mascota" style="color: #7bd7b5;">Ver Más</span>
+                    <span class="informacion-mascota" style="color: #7bd7b5;">{{this.botonInfo}}</span>
                   </ion-card-content>
               </ion-card>
             </ion-slide>
@@ -60,6 +65,30 @@
         
       </ion-row>
     </ion-col>
+  </ion-row>
+
+  <ion-row id="Organizacion" *ngIf="tipo == 'Organizacion'">
+  
+    <ion-row *ngIf="this.publicacion | async ; let publi">
+      <ion-col class='col-transito' style="position: relative; left: 40px;">
+        <ion-slides>
+          <ion-slide class='div-transito' pager="true">
+            <ion-card class="card-mascota">
+              <img style="height: auto;object-fit: cover;width: 60vw;" src="{{publi.foto}}" class="image">
+                <ion-card-header class="header-titulo-mascota">
+                  <ion-card-title class="titulo-paseo">{{publi.nombre}}</ion-card-title>
+                </ion-card-header>
+                <ion-card-subtitle>
+                  <span class="informacion-paseo"><font color="#ffbf00">★</font>{{publi.calificacion}}</span>
+                </ion-card-subtitle>
+                <ion-card-content>
+                  <span class="informacion-mascota" style="color: #7bd7b5;">Ver Más</span>
+                </ion-card-content>
+            </ion-card>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
   </ion-row>
   <!--  -->
   <ion-row>

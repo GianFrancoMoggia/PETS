@@ -20,7 +20,10 @@
     <div style="font-size: 27px;margin-right: 0;margin-left: auto;margin:auto 10px auto auto;">
 
         <span class="informacion-paseo">{{calificacion_promedio}}</span> 
-        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star" class="star" [ngStyle]="{'fill':calificacion_promedio >= 3 ? 'green' : 'red'}"></ion-icon>
     </div>
   </ion-row>
 </ion-card>
+
+
+<!---->

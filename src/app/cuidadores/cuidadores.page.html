@@ -11,9 +11,8 @@
   </ion-row>
   <ion-row style="background: #f8f8f8">
 
-    <div class="div-paseos"  >
-      <app-worker  *ngFor="let paseador of pasServ.listaCuidadores  | async " idUsuario={{paseador.docId}}
-      calificacion_promedio={{paseador.calificacion_promedio}} tipo=cuidador></app-worker>
+    <div class="div-paseos" *ngFor="let cuidadores of pasServ.listaCuidadores | async " >
+      <app-worker *ngIf="cuidadores.docId != authServ.uid" idUsuario={{cuidadores.docId}} calificacion_promedio={{cuidadores.calificacion_promedio}} tipo=cuidador></app-worker>
     </div>
 
   </ion-row>

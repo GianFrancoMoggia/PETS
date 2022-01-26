@@ -1,10 +1,35 @@
-<div *ngIf="this.user | async; let user">
-  <ion-row class="subtitle" *ngIf="user.orgFavoritas">
+<div >
+  <ion-row class="subtitle">
     <ion-label style="font-weight: bold;">Últimas publicaciones de tus organizaciones favoritas</ion-label>
   </ion-row>
-  <ion-row *ngFor="let orgaID of user.orgFavoritas">
-    <app-slider-publis-orgas orgaID={{orgaID}} ></app-slider-publis-orgas>
-   
+  <ion-row *ngIf="this.tieneFavs==true; else elseBlock">
+
+    <ion-row *ngIf="this.publisRecientes==true; else noPublis">
+
+      <ion-slides class="slide1" pager="true" >
+        <ion-slide class="slide2" >
+          <div *ngFor="let publi of this.publicaciones">
+            <publi-card  id={{publi.docId}} nombre={{publi.nombre}} foto={{publi.foto}} calificacion={{publi.calificacion}}></publi-card>
+          </div>
+          
+        </ion-slide>
+      </ion-slides>
+      <!--<app-slider-publis-orgas orgaID={{orgaID}} ></app-slider-publis-orgas>-->
+    </ion-row>
+    <ng-template #noPublis>
+
+      <div style="display:grid; place-items:center; padding-top: 10px; margin-bottom: 10px;">
+        <div><span class="iconify" data-icon="noto:rabbit" style="width: 90px; height: 90%; "></span></div>
+        
+      </div>
+      
+      <ion-label>Ninguna de tus organizaciones favoritas tiene publicaciones nuevas</ion-label>
+    </ng-template>
   </ion-row>
+  <ng-template #elseBlock>
+    <ion-label>No tenés organizaciones favoritas guardadas</ion-label>
+    <button class="button-green" [routerLink]="['/organizaciones']">Explorar Organizaciones</button>
+  </ng-template>
+    
 </div>
 

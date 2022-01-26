@@ -31,6 +31,7 @@
     "@ionic-native/date-picker": "^5.36.0",
     "@ionic-native/file": "^5.34.0",
     "@ionic-native/image-picker": "^5.34.0",
+    "@ionic-native/network": "^5.36.0",
     "@ionic-native/photo-library": "^5.36.0",
     "@ionic-native/splash-screen": "^5.34.0",
     "@ionic-native/status-bar": "^5.34.0",
@@ -71,7 +72,6 @@
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^4.2.1",
-    "cordova-plugin-whitelist": "^1.3.3",
     "eslint": "^7.6.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "30.7.6",
@@ -93,7 +93,6 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "cordova-plugin-whitelist": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},

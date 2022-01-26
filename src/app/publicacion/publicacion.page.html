@@ -1,4 +1,4 @@
-<ion-content  *ngIf="this.publicacion | async; let publi">
+<ion-content *ngIf="this.publicacion | async; let publi">
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
@@ -8,30 +8,75 @@
     </ion-toolbar>
   </ion-header>
   <ion-label><p class="label-organizacion">.</p></ion-label>
-  <ion-col *ngIf= "this.organizacion | async; let org">
-    <div class="div-contiene-foto-nombre" >
-      <ion-avatar  id="org-avatar">
-        <img src="{{org.foto}}">
+  <ion-col *ngIf="this.organizacion | async; let org">
+    <div class="div-contiene-foto-nombre">
+      <ion-avatar id="org-avatar">
+        <img src="{{org.foto}}" />
       </ion-avatar>
       <div class="div-contiene-nombre-provincia">
         <div class="div-nombre-organizacion">
-          <h1 style="font-weight: bold;">{{ org.nombre }}</h1>
+          <h1 style="font-weight: bold">{{ org.nombre }}</h1>
         </div>
-      </div> 
+      </div>
     </div>
   </ion-col>
-  <ion-item class="item-publicaciones">
-  </ion-item>
+  <ion-item class="item-publicaciones"> </ion-item>
   <div>
-    <div class="centrado"><ion-label class="nombre-publi">{{publi.nombre}}</ion-label></div>
-    <div class="centrado"> <img class="foto" src="{{publi.foto}}"> </div>
+    <div class="centrado">
+      <ion-label class="nombre-publi">{{publi.nombre}}</ion-label>
+    </div>
+    <div class="centrado"><img class="foto" src="{{publi.foto}}" /></div>
     <div class="izquierda">
-      <ion-button (click)="mostrarTexto('descripcion')" color="none" class="boton-desc"> Descripcion </ion-button>
-      <p id="descripcion" style="display: none;" class="label-desc"><font color="brown">🐾</font>&nbsp;{{publi.descripcion}}</p>
-      <div class="izquierda"> <ion-button (click)="mostrarTexto('cuidados')" color="none" class="boton-cuidados"> Cuidados </ion-button></div>
-      <p id="cuidados" style="display: none;" class="label-cuidados"><font color="green">✚</font>&nbsp;{{publi.cuidados}}</p>
+      <ion-button
+        (click)="mostrarTexto('descripcion')"
+        color="none"
+        class="boton-desc"
+      >
+        Descripcion
+      </ion-button>
+      <p id="descripcion" style="display: none" class="label-desc">
+        <font color="brown">🐾</font>&nbsp;{{publi.descripcion}}
+      </p>
+      <div class="izquierda">
+        <ion-button
+          (click)="mostrarTexto('cuidados')"
+          color="none"
+          class="boton-cuidados"
+        >
+          Cuidados
+        </ion-button>
+      </div>
+      <p id="cuidados" style="display: none" class="label-cuidados">
+        <font color="green">✚</font>&nbsp;{{publi.cuidados}}
+      </p>
     </div>
   </div>
-  <button class="button-green" (click)="nuevoTransito()" [routerLink]="['/organizacion',publi.docId]">Quiero transitar</button>
-  <button class="button-green" [routerLink]="['/organizacion',publi.docId]">Quiero adoptar</button>
+  <!--<div *ngIf="this.authServ.user$.administrando.includes(organizacion.oid); else noPodiTransitar">-->
+  <div id="siPodi">
+    <button class="button-green" (click)="nuevoTransito('transito')">
+      Quiero transitar
+    </button>
+    <div id="transito" style="display: none" class="svg-loader">
+      <svg class="svg-container" height="20" width="20" viewBox="0 0 100 100">
+        <circle class="loader-svg bg" cx="50" cy="50" r="45"></circle>
+        <circle class="loader-svg animate" cx="50" cy="50" r="45"></circle>
+      </svg>
+    </div>
+    <button class="button-green" [routerLink]="['/organizacion',publi.docId]">
+      Quiero adoptar
+    </button>
+  </div>
+  <!--<ng-template #noPodiTransitar>-->
+  <input
+    type="button"
+    id="noPodi"
+    style="
+      width: 200px;
+      height: 50px;
+      background-image: url('https://es-static.z-dn.net/files/d58/cd154256441d687b095258e6de4da103.jpg');
+      background-size: 100% 100%;
+    "
+    (click)="eriGey()"
+  />
+  <!--</ng-template>-->
 </ion-content>

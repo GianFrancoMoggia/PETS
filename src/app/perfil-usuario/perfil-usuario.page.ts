@@ -24,15 +24,16 @@ import { ObtenerDataService } from '../services/obtener-data.service';
 
 
 export class PerfilUsuarioPage {
+
+  public usuario:userProfile
   
-
-
   constructor(private obDataServ: ObtenerDataService, private afs: AngularFirestore, private aServ:AuthService, private userServ: UserService, private popController: PopoverPerfilComponent) {
-    
+    this.aServ.user$.subscribe((usuario)=>{
+      this.usuario=usuario
+    })
   }
 
-  async ngOnInit(){
-  }
+  async ngOnInit(){}
 
   
  

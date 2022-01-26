@@ -19,7 +19,7 @@
         <div class="div-localizacion-org">
           <h6 style="margin-top: -10px;">Se encuentra en: {{ organizacion.localidad }}</h6>
         </div>
-        <div *ngIf="this.aServ.user$.orgFavoritas.includes(organizacion.docId); else elseBlock">
+        <div *ngIf="this.orgFavoritas.includes(organizacion.docId); else elseBlock">
           <button class="button-green" (click)="quitarDeFav(organizacion.docId)">Quitar de Mis Organizaciones</button>
         </div>
         <ng-template #elseBlock>

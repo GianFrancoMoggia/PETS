@@ -31,9 +31,8 @@
             </ion-card-content>
           </div>
           <div style="font-size: 27px;margin-right: 0;margin-left: auto;margin:auto 10px auto auto;">
-      
               <span class="informacion-paseo">{{orga.calificacion}}</span> 
-              <ion-icon name="star"></ion-icon>
+              <ion-icon name="star"  [ngStyle]="{'fill':orga.calificacion >= 3 ? 'green' : 'red'}"></ion-icon><!--{'fill':orga.calificacion >= 4 ? 'green' : 'red', 'fill':orga.calificacion < 4 && orga.calificacion >= 3  'yellow'}-->
           </div>
         </ion-row>
       </ion-card>

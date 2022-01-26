@@ -11,13 +11,13 @@
   </ion-row>
   <ion-row style="background: #f8f8f8;">
 
-    <div class="div-paseos"  *ngFor="let orgaID of aServ.user$.orgFavoritas">
+    <div class="div-paseos"  *ngFor="let orgaID of orgFavoritas">
       <app-orga-card orgaID={{orgaID}}></app-orga-card>
     </div>
 
   </ion-row>
   <ion-row >
-    <div style="align-items: center; position: absolute; left: 13%; top: 60%;">
+    <div style="align-items: center; position: relative; left: 13%; top: 60%;">
       <button style="font-size: larger; width: 300px;" class="button-green" [routerLink]="['/organizaciones']">Explorar más organizaciones</button>
     </div>
   </ion-row>

@@ -1,16 +1,285 @@
-<ion-card class="card">
-  <ion-row class="filaCard">
-    <ion-col>
-      <div class="margen">
-        <ion-card-title class="titulo" >Paseo de Biscuit</ion-card-title>
-        <ion-card-subtitle class="subtituloHorario">Mañana 10:00</ion-card-subtitle>
-        <ion-button fill="clear" class="ion-button-cancel">cancelar</ion-button>
-        <ion-content color="gray" class="descripcionContent">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ion-content>
+<ion-slides>
+
+    <div *ngIf="this.listContratosPaseador.length > 0 || this.listContratosCuidador.length > 0; else elseBlock">
+      
+      <!-------------------PASEO--------------------------->
+
+      <div *ngFor="let contrato of this.listContratosPaseador">
+        <div *ngIf="contrato.idMascota.length==1; else elseBlock3"> <!--Para 1 mascota sola-->
+          <ion-slide>
+            <ion-card class="card">
+              
+              <ion-row>
+                  <div *ngFor="let mascotaContrato of contrato.idMascota">
+                    <div *ngFor="let mascotaUsuario of this.listaMascotas">
+                      <div *ngIf="mascotaUsuario.docId == mascotaContrato" class="divideEnDosLaCarta">
+                        
+                        <ion-row>
+
+                          <ion-col> <!--Parte del texto-->
+                        
+                            <ion-row>
+                              
+                              <ion-card-header>
+                                <ion-card-title class="titulo" >Paseo de {{mascotaUsuario.nombre}}</ion-card-title>
+                              </ion-card-header>
+      
+                            </ion-row>
+                            <ion-row>
+                              
+                              <div *ngFor="let dia of contrato.dias; let ultimo = last">
+
+                                <div *ngIf="ultimo;else elseBlock1">
+                                  <ion-card-subtitle>{{dia}}</ion-card-subtitle>
+                                </div>
+                                <ng-template #elseBlock1>
+                                  <ion-card-subtitle>{{dia}}-</ion-card-subtitle>
+                                </ng-template>
+                              </div>
+
+                            </ion-row>
+                            <ion-row>
+
+                            </ion-row>
+                          
+                          </ion-col>
+                          
+                          <ion-col> <!--Parte foto-->
+    
+                            <div *ngIf="mascotaUsuario.fotos.length > 0">
+    
+                              <img class="prueba" src={{mascotaUsuario.fotos[0]}}>
+    
+                            </div>
+    
+                          </ion-col>
+
+                        </ion-row>
+
+                      </div>
+                    </div>
+                  </div>
+
+              </ion-row>
+
+            </ion-card>
+          </ion-slide>
+
+        </div>
+        <ng-template #elseBlock3> <!--+1 mascota-->
+          
+          <ion-slide>
+            <ion-card class="card">
+              
+              <ion-row>
+
+                <ion-col> <!--Parte del texto-->
+
+                  <ion-row>
+
+                    <ion-card-header>
+
+                      <ion-card-title class="titulo">Paseo de</ion-card-title>
+
+                      <div *ngFor="let mascotaContrato of contrato.idMascota; let ultimo = last">
+                        <div *ngFor="let mascotaUsuario of this.listaMascotas">
+                          <div *ngIf="mascotaUsuario.docId == mascotaContrato">
+                            <div *ngIf="ultimo;else elseBlock1">
+                              <ion-card-title class="titulo">{{mascotaUsuario.nombre}}</ion-card-title>
+                            </div>
+                            <ng-template #elseBlock1>
+                              <ion-card-title class="titulo">{{mascotaUsuario.nombre}}, </ion-card-title>
+                            </ng-template>
+                          </div>
+                        </div>
+                      </div>
+
+                    </ion-card-header>
+
+                  </ion-row>
+                  <ion-row>
+                  
+                    <div *ngFor="let dia of contrato.dias; let ultimo = last">
+    
+                      <div *ngIf="ultimo;else elseBlock1">
+                        <ion-card-subtitle>{{dia}}</ion-card-subtitle>
+                      </div>
+                      <ng-template #elseBlock1>
+                        <ion-card-subtitle>{{dia}}-</ion-card-subtitle>
+                      </ng-template>
+                    </div>
+    
+                  </ion-row>
+
+                </ion-col> 
+                
+                <ion-col> <!--Parte foto-->
+                  
+                  <div class="contieneFotos">
+                    <div class="contieneFoto1" *ngFor="let mascotaUsuario of this.listaMascotas">
+                      <div *ngIf="mascotaUsuario.docId==contrato.idMascota[0]">
+                        <div *ngIf="mascotaUsuario.fotos.length > 0">
+                          <img class="prueba1" src={{mascotaUsuario.fotos[0]}}>
+                        </div>
+                      </div>
+                    </div>
+                    <div  class="contieneFoto2" *ngFor="let mascotaUsuario of this.listaMascotas">
+                      <div *ngIf="mascotaUsuario.docId==contrato.idMascota[1]">
+                        <div *ngIf="mascotaUsuario.fotos.length > 0">
+                          <img class="prueba2" src={{mascotaUsuario.fotos[0]}}>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </ion-col>
+              
+              </ion-row>
+
+            </ion-card>
+          </ion-slide>
+
+        </ng-template>
+      
       </div>
-    </ion-col>
-    <ion-col>
-      <ion-avatar class="prueba"> 
-      </ion-avatar>
-    </ion-col>
-  </ion-row>
-</ion-card>
+
+      <!-------------------CUIDADOS---------------------------->
+
+      <div *ngFor="let contrato of this.listContratosCuidador">
+        <div *ngIf="contrato.idMascota.length==1; else elseBlock3"> <!--Para 1 mascota sola-->
+          
+          <ion-slide>
+            <ion-card class="card">
+              
+              <ion-row>
+                  <div *ngFor="let mascotaContrato of contrato.idMascota">
+                    <div *ngFor="let mascotaUsuario of this.listaMascotas">
+                      <div *ngIf="mascotaUsuario.docId == mascotaContrato" class="divideEnDosLaCarta">
+                        
+                        <ion-row>
+
+                          <ion-col> <!--Parte del texto-->
+                        
+                            <ion-row>
+                              
+                              <ion-card-header>
+                                <ion-card-title class="titulo" >Cuidado de {{mascotaUsuario.nombre}}</ion-card-title>
+                              </ion-card-header>
+      
+                            </ion-row>
+                            <ion-row>
+                              
+                              <ion-card-subtitle>Inicio: {{contrato.fechaInicio}}</ion-card-subtitle>
+                              <ion-card-subtitle>Cantidad de días: {{contrato.diasTotales}}</ion-card-subtitle>
+
+                            </ion-row>
+                            <ion-row>
+
+                            </ion-row>
+                          
+                          </ion-col>
+                          
+                          <ion-col> <!--Parte foto-->
+    
+                            <div *ngIf="mascotaUsuario.fotos.length > 0">
+    
+                              <img class="prueba" src={{mascotaUsuario.fotos[0]}}>
+    
+                            </div>
+    
+                          </ion-col>
+
+                        </ion-row>
+
+                      </div>
+                    </div>
+                  </div>
+
+              </ion-row>
+
+            </ion-card>
+          </ion-slide>
+
+        </div>
+        <ng-template #elseBlock3> <!--+1 mascota-->
+          
+          <ion-slide>
+            <ion-card class="card">
+              
+              <ion-row>
+
+                <ion-col> <!--Parte del texto-->
+
+                  <ion-row>
+
+                    <ion-card-header>
+
+                      <ion-card-title class="titulo">Cuidado de</ion-card-title>
+
+                      <div *ngFor="let mascotaContrato of contrato.idMascota; let ultimo = last">
+                        <div *ngFor="let mascotaUsuario of this.listaMascotas">
+                          <div *ngIf="mascotaUsuario.docId == mascotaContrato">
+                            <div *ngIf="ultimo;else elseBlock1">
+                              <ion-card-title class="titulo">{{mascotaUsuario.nombre}}</ion-card-title>
+                            </div>
+                            <ng-template #elseBlock1>
+                              <ion-card-title class="titulo">{{mascotaUsuario.nombre}}, </ion-card-title>
+                            </ng-template>
+                          </div>
+                        </div>
+                      </div>
+
+                    </ion-card-header>
+
+                  </ion-row>
+                  <ion-row>
+                  
+                    <ion-card-subtitle>Inicio: {{contrato.fechaInicio}}</ion-card-subtitle>
+                    <ion-card-subtitle>Cantidad de días: {{contrato.diasTotales}}</ion-card-subtitle>
+    
+                  </ion-row>
+
+                </ion-col> 
+                
+                <ion-col> <!--Parte foto-->
+                  
+                  <div class="contieneFotos">
+                    <div class="contieneFoto1" *ngFor="let mascotaUsuario of this.listaMascotas">
+                      <div *ngIf="mascotaUsuario.docId==contrato.idMascota[0]">
+                        <div *ngIf="mascotaUsuario.fotos.length > 0">
+                          <img class="prueba1" src={{mascotaUsuario.fotos[0]}}>
+                        </div>
+                      </div>
+                    </div>
+                    <div  class="contieneFoto2" *ngFor="let mascotaUsuario of this.listaMascotas">
+                      <div *ngIf="mascotaUsuario.docId==contrato.idMascota[1]">
+                        <div *ngIf="mascotaUsuario.fotos.length > 0">
+                          <img class="prueba2" src={{mascotaUsuario.fotos[0]}}>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </ion-col>
+              
+              </ion-row>
+
+            </ion-card>
+          </ion-slide>
+        </ng-template>
+      
+      </div>
+
+      <!----------------------------------------->
+
+    </div>
+
+    <ng-template #elseBlock> <!--+1 mascota-->
+      <ion-slide>
+        <ion-card class="card">
+          <ion-card-title>No hay eventos!</ion-card-title>
+        </ion-card>
+      </ion-slide>
+    </ng-template>
+
+</ion-slides>
